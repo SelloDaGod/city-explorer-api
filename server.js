@@ -46,3 +46,4 @@ app.get("/weather", function(req,res){
 });
 
 app.listen(3001)
+console.log("app.listen")
