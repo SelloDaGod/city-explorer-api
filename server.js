@@ -11,6 +11,20 @@ class Forecast {
       this.description = description;
     }
   }
+  function handleAPIError(error, res) {
+    if (error.response) {
+      console.error("API Error:", error.response.status, error.response.statusText);
+      console.error("Response Data:", error.response.data);
+      res.status(error.response.status).send(error.response.data);
+    } else if (error.request) {
+      console.error("No response received from the server");
+      console.error("Request:", error.request);
+      res.status(500).send("No response received from the server");
+    } else {
+      console.error("Error:", error.message);
+      res.status(500).send("An error occurred while making the API request");
+    }
+  }
 
 app.get("/weather", function(req,res){
     const lat = req.query.lat
@@ -30,7 +44,7 @@ app.get("/weather", function(req,res){
 
     });
     if (city === undefined){
-        res.send("error")
+        res.status(404).send("Error City Not Found")
         
     }else {
         //creating an array of smaller forcast objects from city.data
@@ -42,6 +56,7 @@ app.get("/weather", function(req,res){
        
         res.send(newarray);
     }
+
 
 });
 
