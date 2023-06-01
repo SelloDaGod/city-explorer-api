@@ -11,6 +11,7 @@ class Movie{
 
 }
 app.get("/movies", async function (request, response) {
+  
     let movie = request.query.movie
     let movieResponse = await getmovies(movie)
     response.send(movieResponse)
